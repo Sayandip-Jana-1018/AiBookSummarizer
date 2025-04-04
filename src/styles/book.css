@@ -1,0 +1,150 @@
+/* Book-like styling and animations */
+.book-page {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.book-page-content {
+  font-family: 'Georgia', serif;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+  width: 100%;
+  max-width: 100%;
+}
+
+.book-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography enhancements */
+.book-page-content h1,
+.book-page-content h2,
+.book-page-content h3 {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.book-page-content p {
+  text-align: justify;
+  hyphens: auto;
+  margin-bottom: 1.2em;
+}
+
+/* First letter styling */
+.book-page-content p:first-of-type::first-letter {
+  font-size: 2em;
+  line-height: 0.8;
+  float: left;
+  padding-right: 0.1em;
+  margin-top: 0.1em;
+}
+
+/* Subtle content fade-in animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.book-page-content {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Content container styling */
+.book-page-content > div {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Content styling */
+.book-page-content p {
+  width: 100%;
+  max-width: 100%;
+}
+
+.book-page-content ul,
+.book-page-content ol {
+  width: 100%;
+  max-width: 100%;
+}
+
+.book-page-content li {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Book navigation controls */
+.book-nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.book-nav-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.book-nav-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+  padding-right: 10px; /* Add padding for scrollbar */
+}
+
+/* Reading progress indicator */
+.reading-progress {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.reading-progress-bar {
+  height: 100%;
+  transition: width 0.3s ease;
+}
