@@ -61,7 +61,7 @@ export default function Header() {
                 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
               >
-                AI-Powered Book Summarizer
+                Summarizo
               </motion.h1>
               <motion.p 
                 className="text-white/60 text-xs text-center sm:text-sm"

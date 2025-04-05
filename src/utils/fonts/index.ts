@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 export const inter = Inter({ subsets: ["latin"] });
 
 export const interVar = localFont({
-  src: "./InterVariable.ttf",
+  src: "../../pages/InterVariable.ttf",
   variable: "--font-inter-var",
 });
 

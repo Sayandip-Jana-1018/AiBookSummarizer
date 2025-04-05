@@ -410,19 +410,15 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
     className?: string
   }) => {
     return (
-      <GlassCard className={`p-4 ${className}`}>
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center">
-            <div className="w-6 h-6 rounded-md flex items-center justify-center mr-2"
-              style={{ backgroundColor: `${themeColor}20` }}>
-              {icon}
-            </div>
-            <h3 className="text-white font-medium">{title}</h3>
+      <GlassCard className={`h-full p-3 sm:p-4 ${className}`}>
+        <div className="flex items-center mb-3 sm:mb-4">
+          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center mr-2"
+            style={{ backgroundColor: `${themeColor}30` }}>
+            {icon}
           </div>
+          <h3 className="text-white font-medium text-sm sm:text-base">{title}</h3>
         </div>
-        <div className="chart-container flex-1">
-          {children}
-        </div>
+        {children}
       </GlassCard>
     );
   };
@@ -442,74 +438,82 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
     trendLabel?: string
   }) => {
     return (
-      <GlassCard className="p-4">
-        <div className="flex items-center">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center mr-3"
-            style={{ backgroundColor: `${themeColor}20` }}>
+      <GlassCard className="h-full p-3 sm:p-4">
+        <div className="flex items-center mb-2">
+          <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center mr-2 sm:mr-3"
+            style={{ backgroundColor: `${themeColor}30` }}>
             {icon}
           </div>
           <div>
-            <h3 className="text-white/60 text-sm mb-1">{title}</h3>
-            <p className="text-white text-xl font-semibold">{value}</p>
-            {trend !== undefined && (
-              <div className="flex items-center mt-1">
-                <span className={`text-xs ${trend >= 0 ? 'text-green-400' : 'text-red-400'} flex items-center`}>
-                  <ArrowTrendingUpIcon className={`w-3 h-3 mr-1 ${trend < 0 ? 'transform rotate-180' : ''}`} />
-                  {Math.abs(trend)}% {trendLabel}
-                </span>
-              </div>
-            )}
+            <h3 className="text-white/60 text-xs sm:text-sm">{title}</h3>
+            <p className="text-white text-lg sm:text-2xl font-bold">{value}</p>
           </div>
         </div>
+        
+        {trend !== undefined && (
+          <div className="mt-2 flex items-center">
+            <div className={`flex items-center ${trend >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+              {trend >= 0 ? (
+                <ArrowTrendingUpIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+              ) : (
+                <ArrowTrendingUpIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 transform rotate-180" />
+              )}
+              <span className="text-xs sm:text-sm font-medium">{Math.abs(trend)}%</span>
+            </div>
+            {trendLabel && <span className="text-white/40 text-[10px] sm:text-xs ml-2">{trendLabel}</span>}
+          </div>
+        )}
       </GlassCard>
     );
   };
 
   return (
-    <GlassCard className="p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-white">Analytics Dashboard</h2>
+    <GlassCard className="p-3 sm:p-4 md:p-6">
+      <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between mb-4 sm:mb-6 gap-3 xs:gap-0">
+        <h2 className="text-lg sm:text-xl font-bold text-white">Analytics Dashboard</h2>
         
-        <div className="flex space-x-4">
+        <div className="flex flex-col xs:flex-row gap-3 xs:space-x-4 w-full xs:w-auto">
           {/* Data toggle */}
-          <div className="flex items-center space-x-2">
-            <span className="text-white/60 text-sm">Data:</span>
-            <button 
-              className={`px-3 py-1 rounded-md text-sm ${!showDemoData ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
-              onClick={() => setShowDemoData(false)}
-            >
-              Real
-            </button>
-            <button 
-              className={`px-3 py-1 rounded-md text-sm ${showDemoData ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
-              onClick={() => setShowDemoData(true)}
-            >
-              Demo
-            </button>
+          <div className="flex items-center gap-1 sm:gap-2">
+            <span className="text-white/60 text-xs sm:text-sm">Data:</span>
+            <div className="flex space-x-1">
+              <button 
+                className={`px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm ${!showDemoData ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
+                onClick={() => setShowDemoData(false)}
+              >
+                Real
+              </button>
+              <button 
+                className={`px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm ${showDemoData ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
+                onClick={() => setShowDemoData(true)}
+              >
+                Demo
+              </button>
+            </div>
           </div>
           
           {/* Time range selector */}
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-1">
             <button 
-              className={`px-3 py-1 rounded-md text-sm ${timeRange === 'week' ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
+              className={`px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm ${timeRange === 'week' ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
               onClick={() => setTimeRange('week')}
             >
               Week
             </button>
             <button 
-              className={`px-3 py-1 rounded-md text-sm ${timeRange === 'month' ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
+              className={`px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm ${timeRange === 'month' ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
               onClick={() => setTimeRange('month')}
             >
               Month
             </button>
             <button 
-              className={`px-3 py-1 rounded-md text-sm ${timeRange === 'year' ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
+              className={`px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm ${timeRange === 'year' ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
               onClick={() => setTimeRange('year')}
             >
               Year
             </button>
             <button 
-              className={`px-3 py-1 rounded-md text-sm ${timeRange === 'all' ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
+              className={`px-2 sm:px-3 py-1 rounded-md text-xs sm:text-sm ${timeRange === 'all' ? 'bg-white/20 text-white' : 'text-white/60 hover:bg-white/10'}`}
               onClick={() => setTimeRange('all')}
             >
               All
@@ -536,12 +540,12 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
           animate="show"
         >
           {/* Stats cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
             <motion.div variants={itemVariants}>
               <StatCard 
                 title="Total Summaries" 
                 value={totalSummaries}
-                icon={<DocumentTextIcon className="w-5 h-5 text-white" />}
+                icon={<DocumentTextIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
               />
             </motion.div>
             
@@ -549,7 +553,7 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
               <StatCard 
                 title="Most Popular Length" 
                 value={Object.entries(summariesByLength).reduce((a, b) => a[1] > b[1] ? a : b, ['', 0])[0].charAt(0).toUpperCase() + Object.entries(summariesByLength).reduce((a, b) => a[1] > b[1] ? a : b, ['', 0])[0].slice(1)}
-                icon={<ClockIcon className="w-5 h-5 text-white" />}
+                icon={<ClockIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
                 trend={20}
                 trendLabel="from last period"
               />
@@ -559,7 +563,7 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
               <StatCard 
                 title="Most Popular Style" 
                 value={Object.entries(summariesByStyle).reduce((a, b) => a[1] > b[1] ? a : b, ['', 0])[0].charAt(0).toUpperCase() + Object.entries(summariesByStyle).reduce((a, b) => a[1] > b[1] ? a : b, ['', 0])[0].slice(1)}
-                icon={<AcademicCapIcon className="w-5 h-5 text-white" />}
+                icon={<AcademicCapIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
               />
             </motion.div>
             
@@ -567,7 +571,7 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
               <StatCard 
                 title="Most Popular Focus" 
                 value={Object.entries(summariesByFocus).reduce((a, b) => a[1] > b[1] ? a : b, ['', 0])[0].charAt(0).toUpperCase() + Object.entries(summariesByFocus).reduce((a, b) => a[1] > b[1] ? a : b, ['', 0])[0].slice(1)}
-                icon={<BeakerIcon className="w-5 h-5 text-white" />}
+                icon={<BeakerIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
                 trend={-5}
                 trendLabel="from last period"
               />
@@ -575,13 +579,13 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
           </div>
           
           {/* Charts - Grid layout with equal height and width for all charts */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <motion.div variants={itemVariants}>
               <ChartCard 
                 title="Activity Timeline" 
-                icon={<CalendarIcon className="w-4 h-4 text-white" />}
+                icon={<CalendarIcon className="w-3 h-3 sm:w-4 sm:h-4 text-white" />}
               >
-                <div className="h-64">
+                <div className="h-48 sm:h-56 md:h-64">
                   <Line data={getLineChartConfig()} options={chartOptions} />
                 </div>
               </ChartCard>
@@ -590,9 +594,9 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
             <motion.div variants={itemVariants}>
               <ChartCard 
                 title="Summary Style Distribution" 
-                icon={<ChartPieIcon className="w-4 h-4 text-white" />}
+                icon={<ChartPieIcon className="w-3 h-3 sm:w-4 sm:h-4 text-white" />}
               >
-                <div className="h-64 flex items-center justify-center">
+                <div className="h-48 sm:h-56 md:h-64 flex items-center justify-center">
                   <Pie data={getPieChartConfig()} options={chartOptions} />
                 </div>
               </ChartCard>
@@ -601,9 +605,9 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
             <motion.div variants={itemVariants}>
               <ChartCard 
                 title="Summary Length Distribution" 
-                icon={<ChartBarIcon className="w-4 h-4 text-white" />}
+                icon={<ChartBarIcon className="w-3 h-3 sm:w-4 sm:h-4 text-white" />}
               >
-                <div className="h-64">
+                <div className="h-48 sm:h-56 md:h-64">
                   <Bar data={getBarChartConfig()} options={chartOptions} />
                 </div>
               </ChartCard>
@@ -612,9 +616,9 @@ export default function StatisticsSection({ history }: StatisticsSectionProps) {
             <motion.div variants={itemVariants}>
               <ChartCard 
                 title="Summary Focus Distribution" 
-                icon={<BeakerIcon className="w-4 h-4 text-white" />}
+                icon={<BeakerIcon className="w-3 h-3 sm:w-4 sm:h-4 text-white" />}
               >
-                <div className="h-64 flex items-center justify-center">
+                <div className="h-48 sm:h-56 md:h-64 flex items-center justify-center">
                   <Doughnut data={getDoughnutChartConfig()} options={chartOptions} />
                 </div>
               </ChartCard>

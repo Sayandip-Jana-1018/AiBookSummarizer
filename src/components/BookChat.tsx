@@ -7,7 +7,8 @@ import {
   ChatBubbleLeftRightIcon,
   SparklesIcon,
   ArrowPathIcon,
-  BookOpenIcon
+  BookOpenIcon,
+  UserIcon
 } from '@heroicons/react/24/outline';
 import { HistoryItem } from './HistorySection';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -170,111 +171,78 @@ export default function BookChat({ selectedBook, onSelectBook, history }: BookCh
   };
 
   return (
-    <GlassCard className="w-full h-full flex flex-col">
-      <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
+    <GlassCard className="h-full flex flex-col p-2 sm:p-4">
+      {/* Book selector */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 pb-3 sm:pb-4 border-b border-white/10 gap-2">
         <div className="flex items-center">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center mr-3"
-            style={{ backgroundColor: `${themeColor}20` }}>
-            <ChatBubbleLeftRightIcon className="w-5 h-5 text-white" />
+          <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0"
+            style={{ backgroundColor: `${themeColor}30` }}>
+            <ChatBubbleLeftRightIcon className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white" />
           </div>
-          <div>
-            <h2 className="text-white font-semibold">Book Chat</h2>
-            <p className="text-white/60 text-xs">Ask questions about your summarized books</p>
+          <div className="min-w-0 overflow-hidden">
+            <h2 className="text-white font-semibold text-sm sm:text-lg truncate">
+              {selectedBook ? `Chat with ${selectedBook.title}` : 'Book Chat'}
+            </h2>
+            <p className="text-white/60 text-xs sm:text-sm truncate">
+              {selectedBook ? 'Ask questions about this book' : 'Select a book to chat with'}
+            </p>
           </div>
         </div>
         
-        {/* Book selector dropdown */}
-        <div className="relative">
+        {selectedBook && (
           <select
-            value={selectedBook?.id || ''}
+            value={selectedBook.id}
             onChange={(e) => {
               const bookId = e.target.value;
               const book = history.find(b => b.id === bookId) || null;
               onSelectBook(book);
             }}
-            className="text-white text-sm rounded-lg border px-3 py-2 appearance-none focus:outline-none focus:ring-1 pr-8"
-            style={{
-              backgroundColor: `${themeColor}20`,
-              borderColor: `${themeColor}50`,
-              boxShadow: `0 0 10px ${themeColor}30`
-            }}
+            className="bg-black/30 text-white text-xs sm:text-sm rounded-lg border border-white/10 px-2 sm:px-3 py-1 sm:py-2 appearance-none focus:outline-none focus:ring-1 focus:ring-white/30 pr-6 sm:pr-8 w-full sm:w-auto"
           >
-            <option 
-              value="" 
-              disabled 
-              style={{
-                backgroundColor: `${themeColor}30`,
-                color: 'black'
-              }}
-            >
-              Select a book
-            </option>
             {history.map(book => (
-              <option 
-                key={book.id} 
-                value={book.id}
-                style={{
-                  backgroundColor: `${themeColor}30`,
-                  color: 'black'
-                }}
-              >
-                {book.title}
-              </option>
+              <option key={book.id} value={book.id}>{book.title}</option>
             ))}
           </select>
-          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-            <svg className="w-4 h-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
+        )}
       </div>
       
       {selectedBook ? (
         <>
           {/* Chat messages */}
-          <div className="flex-1 overflow-y-auto mb-4 pr-2 custom-scrollbar">
-            <motion.div
+          <div className="flex-1 overflow-y-auto mb-3 sm:mb-4 pr-1 sm:pr-2">
+            <motion.div 
+              className="space-y-2 sm:space-y-4"
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-4"
             >
               {messages.map((message) => (
-                <motion.div
+                <motion.div 
                   key={message.id}
                   variants={itemVariants}
                   className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div 
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                      message.sender === 'user' 
-                        ? 'bg-gradient-to-r from-white/10 to-white/5 ml-auto' 
-                        : `bg-gradient-to-r from-[${themeColor}30] to-[${themeColor}10]`
-                    }`}
+                    className={`rounded-2xl px-2.5 sm:px-4 py-1.5 sm:py-3 max-w-[90%] sm:max-w-[80%] ${message.sender === 'user' 
+                      ? 'bg-gradient-to-r from-[#5B21B650] to-[#5B21B630] rounded-tr-none' 
+                      : 'bg-gradient-to-r from-[#5B21B630] to-[#5B21B610] rounded-tl-none'}`}
                   >
                     <div className="flex items-center mb-1">
                       <div 
-                        className="w-6 h-6 rounded-full flex items-center justify-center mr-2"
-                        style={{ 
-                          backgroundColor: message.sender === 'user' 
-                            ? 'rgba(255, 255, 255, 0.1)' 
-                            : `${themeColor}30`
-                        }}
+                        className="w-4 h-4 sm:w-6 sm:h-6 rounded-full flex items-center justify-center mr-1 sm:mr-2 flex-shrink-0"
+                        style={{ backgroundColor: `${themeColor}30` }}
                       >
                         {message.sender === 'user' ? (
-                          <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                          </svg>
+                          <UserIcon className="w-2 h-2 sm:w-3 sm:h-3 text-white" />
                         ) : (
-                          <SparklesIcon className="w-3 h-3 text-white" />
+                          <SparklesIcon className="w-2 h-2 sm:w-3 sm:h-3 text-white" />
                         )}
                       </div>
-                      <span className="text-white/60 text-xs">
+                      <span className="text-white/60 text-[9px] sm:text-xs truncate">
                         {message.sender === 'user' ? 'You' : 'AI Assistant'} • {formatTime(message.timestamp)}
                       </span>
                     </div>
-                    <p className="text-white text-sm whitespace-pre-wrap">{message.content}</p>
+                    <p className="text-white text-[11px] sm:text-sm whitespace-pre-wrap break-words">{message.content}</p>
                   </div>
                 </motion.div>
               ))}
@@ -283,15 +251,15 @@ export default function BookChat({ selectedBook, onSelectBook, history }: BookCh
                   variants={itemVariants}
                   className="flex justify-start"
                 >
-                  <div className="bg-gradient-to-r from-[#5B21B630] to-[#5B21B610] rounded-2xl px-4 py-3">
+                  <div className="bg-gradient-to-r from-[#5B21B630] to-[#5B21B610] rounded-2xl px-2.5 sm:px-4 py-1.5 sm:py-3">
                     <div className="flex items-center">
                       <div 
-                        className="w-6 h-6 rounded-full flex items-center justify-center mr-2"
+                        className="w-4 h-4 sm:w-6 sm:h-6 rounded-full flex items-center justify-center mr-1 sm:mr-2 flex-shrink-0"
                         style={{ backgroundColor: `${themeColor}30` }}
                       >
-                        <ArrowPathIcon className="w-3 h-3 text-white animate-spin" />
+                        <ArrowPathIcon className="w-2 h-2 sm:w-3 sm:h-3 text-white animate-spin" />
                       </div>
-                      <span className="text-white/60 text-xs">AI is thinking...</span>
+                      <span className="text-white/60 text-[9px] sm:text-xs">AI is thinking...</span>
                     </div>
                   </div>
                 </motion.div>
@@ -301,7 +269,7 @@ export default function BookChat({ selectedBook, onSelectBook, history }: BookCh
           </div>
           
           {/* Input area */}
-          <div className="relative">
+          <div className="relative mt-auto">
             <input
               ref={inputRef}
               type="text"
@@ -309,35 +277,35 @@ export default function BookChat({ selectedBook, onSelectBook, history }: BookCh
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask a question about this book..."
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-white/30"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-3 pr-8 sm:pr-12 text-xs sm:text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-white/30"
               disabled={isLoading}
             />
             <button
               onClick={handleSendMessage}
               disabled={isLoading || inputValue.trim() === ''}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
+              className="absolute right-1.5 top-1/2 transform -translate-y-1/2 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all duration-200"
               style={{ 
                 backgroundColor: inputValue.trim() === '' ? 'rgba(255, 255, 255, 0.1)' : `${themeColor}50`,
                 opacity: isLoading ? 0.5 : 1
               }}
             >
-              <PaperAirplaneIcon className="w-4 h-4 text-white" />
+              <PaperAirplaneIcon className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-white" />
             </button>
           </div>
         </>
       ) : (
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+        <div className="flex-1 flex flex-col items-center justify-center p-4">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mb-3 sm:mb-4"
             style={{ backgroundColor: `${themeColor}20` }}>
-            <BookOpenIcon className="w-8 h-8 text-white/70" />
+            <BookOpenIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white/70" />
           </div>
-          <h3 className="text-white font-medium text-lg mb-2">Select a Book to Chat</h3>
-          <p className="text-white/60 text-sm text-center max-w-md mb-6">
+          <h3 className="text-white font-medium text-base sm:text-lg mb-2">Select a Book to Chat</h3>
+          <p className="text-white/60 text-xs sm:text-sm text-center max-w-md mb-4 sm:mb-6">
             Choose a book from your history to start asking questions about it.
           </p>
           
           {history.length === 0 ? (
-            <p className="text-white/40 text-sm">
+            <p className="text-white/40 text-xs sm:text-sm">
               You need to summarize books first to use this feature.
             </p>
           ) : (
@@ -347,7 +315,7 @@ export default function BookChat({ selectedBook, onSelectBook, history }: BookCh
                 const book = history.find(b => b.id === bookId) || null;
                 onSelectBook(book);
               }}
-              className="bg-black/30 text-white text-sm rounded-lg border border-white/10 px-4 py-2 appearance-none focus:outline-none focus:ring-1 focus:ring-white/30 pr-8"
+              className="bg-black/30 text-white text-xs sm:text-sm rounded-lg border border-white/10 px-3 sm:px-4 py-2 appearance-none focus:outline-none focus:ring-1 focus:ring-white/30 pr-6 sm:pr-8"
             >
               <option value="" disabled selected>Select a book</option>
               {history.map(book => (

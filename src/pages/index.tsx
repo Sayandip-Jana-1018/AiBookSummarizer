@@ -233,23 +233,23 @@ export default function Home() {
       
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-4 relative z-10 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text" 
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 gradient-text" 
           style={{ backgroundImage: `linear-gradient(135deg, ${themeColor} 0%, white 100%)` }}>
           AI-Powered Book Summarizer
         </h1>
-        <p className="text-white/80 text-lg md:text-xl max-w-3xl mx-auto mb-8">
+        <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
           Transform lengthy books into concise, insightful summaries with the power of Gemini AI
         </p>
-        <div className="flex justify-center space-x-4 mb-12">
-          <div className="flex items-center text-white/70 text-sm">
+        <div className="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-3 sm:space-y-0 mb-8 sm:mb-12">
+          <div className="flex items-center justify-center text-white/70 text-sm">
             <SparklesIcon className="w-5 h-5 mr-2" />
             <span>Intelligent Analysis</span>
           </div>
-          <div className="flex items-center text-white/70 text-sm">
+          <div className="flex items-center justify-center text-white/70 text-sm">
             <BookmarkIcon className="w-5 h-5 mr-2" />
             <span>Customizable Summaries</span>
           </div>
-          <div className="flex items-center text-white/70 text-sm">
+          <div className="flex items-center justify-center text-white/70 text-sm">
             <AcademicCapIcon className="w-5 h-5 mr-2" />
             <span>Academic Focus</span>
           </div>
@@ -258,27 +258,27 @@ export default function Home() {
 
       {/* Mobile Navigation */}
       {isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 bg-black/50 backdrop-blur-md border-t border-white/10 z-50 px-2 py-1">
+        <div className="fixed bottom-0 left-0 right-0 bg-black/70 backdrop-blur-md border-t border-white/10 z-50 px-2 py-1 safe-bottom">
           <div className="flex justify-around">
             <button 
               onClick={() => setActiveTab('summarize')}
-              className={`flex flex-col items-center py-2 px-4 rounded-lg ${activeTab === 'summarize' ? 'bg-white/10' : ''}`}
+              className={`flex flex-col items-center py-2 px-3 rounded-lg ${activeTab === 'summarize' ? 'bg-white/10' : ''}`}
             >
-              <DocumentTextIcon className="w-6 h-6 text-white" />
+              <DocumentTextIcon className="w-5 h-5 text-white" />
               <span className="text-xs text-white/80 mt-1">Summarize</span>
             </button>
             <button 
               onClick={() => setActiveTab('history')}
-              className={`flex flex-col items-center py-2 px-4 rounded-lg ${activeTab === 'history' ? 'bg-white/10' : ''}`}
+              className={`flex flex-col items-center py-2 px-3 rounded-lg ${activeTab === 'history' ? 'bg-white/10' : ''}`}
             >
-              <ClockIcon className="w-6 h-6 text-white" />
+              <ClockIcon className="w-5 h-5 text-white" />
               <span className="text-xs text-white/80 mt-1">History</span>
             </button>
             <button 
               onClick={() => setActiveTab('stats')}
-              className={`flex flex-col items-center py-2 px-4 rounded-lg ${activeTab === 'stats' ? 'bg-white/10' : ''}`}
+              className={`flex flex-col items-center py-2 px-3 rounded-lg ${activeTab === 'stats' ? 'bg-white/10' : ''}`}
             >
-              <ChartBarIcon className="w-6 h-6 text-white" />
+              <ChartBarIcon className="w-5 h-5 text-white" />
               <span className="text-xs text-white/80 mt-1">Stats</span>
             </button>
             <button 
@@ -290,9 +290,9 @@ export default function Home() {
                   }
                 }
               }}
-              className={`flex flex-col items-center py-2 px-4 rounded-lg ${activeTab === 'chat' ? 'bg-white/10' : ''}`}
+              className={`flex flex-col items-center py-2 px-3 rounded-lg ${activeTab === 'chat' ? 'bg-white/10' : ''}`}
             >
-              <ChatBubbleLeftRightIcon className="w-6 h-6 text-white" />
+              <ChatBubbleLeftRightIcon className="w-5 h-5 text-white" />
               <span className="text-xs text-white/80 mt-1">Chat</span>
             </button>
           </div>
@@ -300,7 +300,7 @@ export default function Home() {
       )}
       
       <motion.main 
-        className="container mx-auto px-4 py-8 pb-24 md:pb-16 relative z-10"
+        className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 pb-28 sm:pb-24 md:pb-16 relative z-10"
         variants={containerVariants}
         initial="hidden"
         animate={pageLoaded ? "visible" : "hidden"}
@@ -352,9 +352,9 @@ export default function Home() {
         {/* Main Content based on active tab */}
         <motion.div variants={itemVariants} className="mb-16">
           {activeTab === 'summarize' && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Left column - File upload and options */}
-              <div className="lg:col-span-1 space-y-6">
+              <div className="lg:col-span-1 space-y-4 sm:space-y-6">
                 <FileUpload 
                   onFileSelect={handleFileSelect} 
                   selectedFile={selectedFile} 
@@ -365,11 +365,11 @@ export default function Home() {
                   onChange={setOptions} 
                 />
                 
-                <GlassCard>
+                <GlassCard className="p-3 sm:p-4">
                   <button
                     onClick={generateSummary}
                     disabled={!extractedText || isGenerating}
-                    className="w-full py-3 rounded-lg font-medium text-white transition-all duration-300 relative overflow-hidden"
+                    className="w-full py-2 sm:py-3 rounded-lg font-medium text-white transition-all duration-300 relative overflow-hidden text-sm sm:text-base"
                     style={{
                       backgroundColor: !extractedText || isGenerating ? '#555' : themeColor,
                       opacity: !extractedText || isGenerating ? 0.7 : 1
@@ -377,7 +377,7 @@ export default function Home() {
                   >
                     {isGenerating ? (
                       <span className="flex items-center justify-center">
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -389,7 +389,7 @@ export default function Home() {
                   {summary && (
                     <button
                       onClick={handleReset}
-                      className="mt-3 w-full py-2 rounded-lg font-medium text-white/70 bg-white/10 hover:bg-white/20 transition-all duration-300"
+                      className="mt-3 w-full py-2 rounded-lg font-medium text-white/70 bg-white/10 hover:bg-white/20 transition-all duration-300 text-sm sm:text-base"
                     >
                       Reset & Start Over
                     </button>
@@ -398,7 +398,7 @@ export default function Home() {
               </div>
               
               {/* Right column - Summary display */}
-              <div className="lg:col-span-2">
+              <div className="lg:col-span-2 mt-4 sm:mt-0">
                 <div style={{ height: '100%' }}>
                   <SummaryDisplay 
                     summary={summary} 
@@ -423,7 +423,7 @@ export default function Home() {
           )}
           
           {activeTab === 'chat' && (
-            <div className="h-[600px]">
+            <div className="h-[450px] sm:h-[500px] md:h-[600px] pb-4 sm:pb-0">
               {history.length > 0 ? (
                 <BookChat 
                   selectedBook={selectedChatBook} 
@@ -431,19 +431,19 @@ export default function Home() {
                   history={history} 
                 />
               ) : (
-                <GlassCard className="w-full h-full flex flex-col items-center justify-center">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                <GlassCard className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-6">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mb-3 sm:mb-4"
                     style={{ backgroundColor: `${themeColor}20` }}>
-                    <ChatBubbleLeftRightIcon className="w-8 h-8 text-white/70" />
+                    <ChatBubbleLeftRightIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white/70" />
                   </div>
-                  <h3 className="text-white font-medium text-lg mb-2">No Books to Chat With</h3>
-                  <p className="text-white/60 text-sm text-center max-w-md mb-6">
+                  <h3 className="text-white font-medium text-base sm:text-lg mb-2">No Books to Chat With</h3>
+                  <p className="text-white/60 text-xs sm:text-sm text-center max-w-md mb-4 sm:mb-6">
                     You need to summarize books first to use the chat feature. 
                     Upload a book and generate a summary to get started.
                   </p>
                   <button
                     onClick={() => setActiveTab('summarize')}
-                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+                    className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200"
                     style={{ backgroundColor: `${themeColor}40`, color: 'white' }}
                   >
                     Go to Summarize
@@ -455,16 +455,16 @@ export default function Home() {
         </motion.div>
         
         {/* Virtual Coach Section */}
-        <section className="mt-16 mb-12">
-          <h2 className="text-2xl font-bold mb-8 text-center">Your AI Reading Assistant</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <section className="mt-12 sm:mt-16 mb-8 sm:mb-12">
+          <h2 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center">Your AI Reading Assistant</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
             <div>
-              <GlassCard className="glass-hover">
-                <h3 className="text-white text-lg font-semibold mb-4">Meet Your Virtual Reading Coach</h3>
-                <p className="text-white/80 mb-4">
+              <GlassCard className="glass-hover p-4 sm:p-5">
+                <h3 className="text-white text-base sm:text-lg font-semibold mb-3 sm:mb-4">Meet Your Virtual Reading Coach</h3>
+                <p className="text-white/80 text-sm sm:text-base mb-3 sm:mb-4">
                   Our AI assistant is powered by Google's Gemini 2.5 Pro, capable of understanding and summarizing even the most complex books.
                 </p>
-                <ul className="space-y-3 mb-6">
+                <ul className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                   {[
                     "Processes books up to 20MB in size",
                     "Handles large texts with intelligent chunking",
@@ -472,19 +472,19 @@ export default function Home() {
                     "Maintains key concepts and important details"
                   ].map((feature, index) => (
                     <li key={index} className="flex items-start">
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center mr-2 shrink-0 mt-0.5"
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center mr-2 shrink-0 mt-0.5"
                         style={{ backgroundColor: `${themeColor}30` }}>
-                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-2 h-2 sm:w-3 sm:h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <span className="text-white/70 text-sm">{feature}</span>
+                      <span className="text-white/70 text-xs sm:text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
-                <div className="text-white/60 text-sm p-3 rounded-lg bg-white/5 border border-white/10">
+                <div className="text-white/60 text-xs sm:text-sm p-2 sm:p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="flex items-start">
-                    <svg className="w-5 h-5 mr-2 shrink-0 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 shrink-0 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>
@@ -494,7 +494,7 @@ export default function Home() {
                 </div>
               </GlassCard>
             </div>
-            <div className="h-[400px]">
+            <div className="h-[250px] sm:h-[300px] md:h-[400px]">
               <VirtualCoach 
                 modelUrl="/virtual_coach.glb" 
                 className="w-full h-full"
@@ -504,42 +504,42 @@ export default function Home() {
         </section>
         
         {/* How It Works Section */}
-        <section className="mt-16 mb-12">
-          <h2 className="text-2xl font-bold mb-8 text-center">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children">
+        <section className="mt-12 sm:mt-16 mb-8 sm:mb-12">
+          <h2 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center">How It Works</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 stagger-children">
             {[
               {
-                icon: <BookOpenIcon className="w-6 h-6 text-white" />,
+                icon: <BookOpenIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
                 title: "1. Upload Your Book",
                 description: "Upload any PDF book up to 20MB in size. Our system will extract the text content."
               },
               {
-                icon: <SparklesIcon className="w-6 h-6 text-white" />,
+                icon: <SparklesIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
                 title: "2. Customize Options",
                 description: "Select your preferred summary length, style, and focus to tailor the output to your needs."
               },
               {
-                icon: <DocumentTextIcon className="w-6 h-6 text-white" />,
+                icon: <DocumentTextIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
                 title: "3. Get Your Summary",
                 description: "Receive a beautifully formatted summary with key insights and main points from the book."
               }
             ].map((step, index) => (
-              <GlassCard key={index} className="glass-hover text-center p-8">
-                <div className="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4"
+              <GlassCard key={index} className="glass-hover text-center p-4 sm:p-6 md:p-8">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full mx-auto flex items-center justify-center mb-3 sm:mb-4"
                   style={{ backgroundColor: `${themeColor}20` }}>
                   {step.icon}
                 </div>
-                <h3 className="text-white text-lg font-semibold mb-2">{step.title}</h3>
-                <p className="text-white/70">{step.description}</p>
+                <h3 className="text-white text-base sm:text-lg font-semibold mb-1 sm:mb-2">{step.title}</h3>
+                <p className="text-white/70 text-sm sm:text-base">{step.description}</p>
               </GlassCard>
             ))}
           </div>
         </section>
         
         {/* FAQ Section */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-children">
+        <section className="mb-12 sm:mb-16">
+          <h2 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 stagger-children">
             {[
               {
                 question: "What file types are supported?",
@@ -558,16 +558,16 @@ export default function Home() {
                 answer: "Yes, we don't store the content of your books on our servers. All processing is done in memory and summaries are generated on-demand."
               }
             ].map((faq, index) => (
-              <GlassCard key={index} className="glass-hover">
-                <h3 className="text-white text-lg font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/70">{faq.answer}</p>
+              <GlassCard key={index} className="glass-hover p-4 sm:p-5">
+                <h3 className="text-white text-base sm:text-lg font-semibold mb-1 sm:mb-2">{faq.question}</h3>
+                <p className="text-white/70 text-sm sm:text-base">{faq.answer}</p>
               </GlassCard>
             ))}
           </div>
         </section>
         
         {/* Footer */}
-        <footer className="text-center text-white/50 text-sm py-8 border-t border-white/10">
+        <footer className="text-center text-white/50 text-xs sm:text-sm py-6 sm:py-8 border-t border-white/10 mt-8 mb-16 sm:mb-0">
           <p>© {new Date().getFullYear()} BookSummarizer. Powered by Gemini AI.</p>
         </footer>
       </motion.main>
